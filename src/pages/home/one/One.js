@@ -12,11 +12,15 @@ export default function One(){
             setDisplayList(res.data);
         }).catch(error => {
             if (error.response) {
+                alert("Có lỗi xảy ra")
                 console.log(error.response.data);
                 console.log(error.response.status);
                 console.log(error.response.headers);
-                navigate("/");
-            }})
+            }else if (error.request) {
+                alert("Server không phản hồi")
+                console.log(error.request);
+            }
+        })
     })
     const search = (e) => {
         console.log(e.target.value);

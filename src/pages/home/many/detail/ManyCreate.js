@@ -12,10 +12,13 @@ export default function ManyCreate(){
             response => setOneList(response.data)
         ).catch(error => {
             if (error.response) {
-                navigate("/")
+                alert("Server không phản hồi")
                 console.log(error.response.data);
                 console.log(error.response.status);
                 console.log(error.response.headers);
+            }else if (error.request) {
+                alert("Có lỗi xảy ra")
+                console.log(error.request);
             }
         })
     }, [])
@@ -39,11 +42,16 @@ export default function ManyCreate(){
                         navigate("/many")
                         // window.location.assign("/many");
                     }).catch(error => {
-                        alert("Không thành công")
                         if (error.response) {
+                            alert("Server không phản hồi")
+                            navigate("/")
                             console.log(error.response.data);
                             console.log(error.response.status);
                             console.log(error.response.headers);
+                        }else if (error.request) {
+                            alert("Có lỗi xảy ra")
+                            navigate("/")
+                            console.log(error.request);
                         }
                     })
                     console.log(values);

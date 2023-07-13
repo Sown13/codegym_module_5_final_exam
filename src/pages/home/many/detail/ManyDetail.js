@@ -12,9 +12,13 @@ export default function ManyDetail() {
             }
         ).catch(error => {
             if (error.response) {
+                alert("Có lỗi xảy ra")
                 console.log(error.response.data);
                 console.log(error.response.status);
                 console.log(error.response.headers);
+            }else if (error.request) {
+                alert("Server không phản hồi")
+                console.log(error.request);
             }
         })
     }, [manyId]);
@@ -27,10 +31,13 @@ export default function ManyDetail() {
                     window.location.assign("/many");
                 }).catch(error => {
                 if (error.response) {
-                    alert("Xóa không thành công")
+                    alert("Có lỗi xảy ra")
                     console.log(error.response.data);
                     console.log(error.response.status);
                     console.log(error.response.headers);
+                }else if (error.request) {
+                    alert("Server không phản hồi")
+                    console.log(error.request);
                 }
             })
         }

@@ -20,10 +20,15 @@ export default function ManyEdit(){
             }
         ).catch(error => {
             if (error.response) {
+                alert("Có lỗi xảy ra")
                 navigate("/")
                 console.log(error.response.data);
                 console.log(error.response.status);
                 console.log(error.response.headers);
+            }else if (error.request) {
+                alert("Server không phản hồi")
+                navigate("/")
+                console.log(error.request);
             }
         })
     },[manyId]);
@@ -33,10 +38,15 @@ export default function ManyEdit(){
             response => setOneList(response.data)
         ).catch(error => {
             if (error.response) {
+                alert("Có lỗi xảy ra")
                 navigate("/")
                 console.log(error.response.data);
                 console.log(error.response.status);
                 console.log(error.response.headers);
+            }else if (error.request) {
+                alert("Server không phản hồi")
+                navigate("/")
+                console.log(error.request);
             }
         })
     }, [])
@@ -60,12 +70,16 @@ export default function ManyEdit(){
                         window.location.assign("/many");
                         // navigate(`/blog/${blogId}`)
                     }).catch(error => {
-                        alert("Không thành công")
                         if (error.response) {
+                            alert("Có lỗi xảy ra")
                             navigate("/")
                             console.log(error.response.data);
                             console.log(error.response.status);
                             console.log(error.response.headers);
+                        }else if (error.request) {
+                            alert("Server không phản hồi")
+                            navigate("/")
+                            console.log(error.request);
                         }
                     })
                     console.log(values);
