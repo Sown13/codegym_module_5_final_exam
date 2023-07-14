@@ -4,43 +4,39 @@ import axios from "axios";
 import {Field, Form, Formik} from "formik";
 
 export default function ManyCreate(){
-    const [oneList, setOneList] = useState([]);
+    // const [oneList, setOneList] = useState([]);
     let navigate = useNavigate();
 
-    useEffect(() => {
-        axios.get("http://localhost:8080/one").then(
-            response => setOneList(response.data)
-        ).catch(error => {
-            if (error.response) {
-                alert("Server không phản hồi")
-                console.log(error.response.data);
-                console.log(error.response.status);
-                console.log(error.response.headers);
-            }else if (error.request) {
-                alert("Có lỗi xảy ra")
-                console.log(error.request);
-            }
-        })
-    }, [])
+    // useEffect(() => {
+    //     axios.get("http://localhost:8080/one").then(
+    //         response => setOneList(response.data)
+    //     ).catch(error => {
+    //         if (error.response) {
+    //             alert("Server không phản hồi")
+    //             console.log(error.response.data);
+    //             console.log(error.response.status);
+    //             console.log(error.response.headers);
+    //         }else if (error.request) {
+    //             alert("Có lỗi xảy ra")
+    //             console.log(error.request);
+    //         }
+    //     })
+    // }, [])
     return (
         <>
-            <h1> Thêm Many mới</h1>
+            <h1> Thêm Tour mới</h1>
             <Formik initialValues={
                 {
-                    field1: "",
-                    field2: "",
-                    field3: "",
-                    field4: "",
-                    one: {
-                        oneId : 1
-                    }
+                    title: "",
+                    price: "",
+                    description: "",
                 }
             } onSubmit={values => {
                 if (window.confirm("Bạn có chắc chắn muốn thêm không?")){
-                    axios.post(`http://localhost:8080/many/`,values).then(()=>{
+                    axios.post(`http://localhost:3000/tuors/`,values).then(()=>{
                         alert("Thành công")
-                        navigate("/many")
-                        // window.location.assign("/many");
+                        // navigate("/many")
+                        window.location.assign("/many");
                     }).catch(error => {
                         if (error.response) {
                             alert("Server không phản hồi")
@@ -58,27 +54,27 @@ export default function ManyCreate(){
                 }}}
                     enableReinitialize={true}>
                 <Form>
-                    <h2> Nhập thông tin Many mới</h2>
-                    <h2> field 1 </h2>
-                    <Field type={"text"} name={'field1'}></Field>
-                    <p> field 2 </p>
-                    <Field type={"text"} name={'field2'}></Field>
-                    <p> field 3 </p>
-                    <Field type={"text"} name={'field3'}></Field>
-                    <p> field 4 </p>
-                    <Field type={"text"} name={'field4'}></Field>
-                    <p> one </p>
-                    <Field as='select' name={'one.oneId'}>
-                        {oneList.map(one => {
-                                return (
-                                    <option key={one.oneId} value={one.oneId}> {one.field1} </option>
-                                )
-                            }
-                        )
-                        }
-                    </Field>
+                    <h2> Nhập thông tin Tour mới</h2>
+                    <h2> Tiêu đề </h2>
+                    <Field type={"text"} name={'title'}></Field>
+                    <p> Giá </p>
+                    <Field type={"number"} name={'price'}></Field>
+                    <p> Mô tả </p>
+                    <Field as={"textarea"} name={'description'} style={{width: '90%',height:'100px'}} ></Field>
+                    {/*<p> field 4 </p>*/}
+                    {/*<Field type={"text"} name={'field4'}></Field>*/}
+                    {/*<p> one </p>*/}
+                    {/*<Field as='select' name={'one.oneId'}>*/}
+                    {/*    {oneList.map(one => {*/}
+                    {/*            return (*/}
+                    {/*                <option key={one.oneId} value={one.oneId}> {one.field1} </option>*/}
+                    {/*            )*/}
+                    {/*        }*/}
+                    {/*    )*/}
+                    {/*    }*/}
+                    {/*</Field>*/}
                     <br/>
-                    <button> Lưu </button>
+                    <button type={"submit"}> Lưu </button>
                 </Form>
             </Formik>
         </>)

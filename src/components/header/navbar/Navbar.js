@@ -7,17 +7,17 @@ export default function Navbar(){
         <ul className="navbar-list">
             <li className="navbar-item">
                 <Link className="navbar-link" to={"/"}>
-                    Home
+                    Trang chủ
                 </Link>
             </li>
             <li className="navbar-item">
                 <Link className="navbar-link" to={"/many"}>
-                    Many
+                    Danh sách Tour du lịch
                 </Link>
             </li>
             <li className="navbar-item">
                 <Link className="navbar-link" to={"/one"}>
-                    One
+                    About
                 </Link>
             </li>
         </ul>

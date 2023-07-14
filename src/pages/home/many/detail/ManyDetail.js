@@ -3,12 +3,12 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 
 export default function ManyDetail() {
-    let manyId = useParams().id;
-    const [many, setMany] = useState('');
+    let tuorId = useParams().id;
+    const [tuor, setTuor] = useState('');
     useEffect(() => {
-        axios.get(`http://localhost:8080/many/${manyId}`).then(
+        axios.get(`http://localhost:3000/tuors/${tuorId}`).then(
             response => {
-                setMany(response.data)
+                setTuor(response.data)
             }
         ).catch(error => {
             if (error.response) {
@@ -21,11 +21,11 @@ export default function ManyDetail() {
                 console.log(error.request);
             }
         })
-    }, [manyId]);
+    }, [tuorId]);
 
     const handleDelete = () => {
         if (window.confirm("Bạn có chắc chắn muốn xóa không?")) {
-            axios.delete(`http://localhost:8080/many/${manyId}`).then(
+            axios.delete(`http://localhost:3000/tuors/${tuorId}`).then(
                 () => {
                     alert("Xóa thành công");
                     window.location.assign("/many");
@@ -44,13 +44,14 @@ export default function ManyDetail() {
     }
     return (
         <>
-            <h1> Chi tiết Many </h1>
-            <p> field 1 : {many.field1} </p>
-            <p> field 2 : {many.field2} </p>
-            <p> field 3 : {many.field3} </p>
-            <p> field 4 : {many.field4} </p>
-            <Link to={`/many/${manyId}/edit`}><button> Sửa </button></Link>
+            <h1> Chi tiết Tour </h1>
+            <h2> Tiêu đề : {tuor.title} </h2>
+            <p> Giá : {tuor.price} </p>
+            <p> Mô tả : {tuor.description} </p>
+            <Link to={`/many/${tuorId}/edit`}><button> Sửa </button></Link>
             <button onClick={handleDelete}> Xóa </button>
+            <hr/>
+            <Link to={`/many`}> Xem danh sách </Link>
         </>
     )
 }

@@ -4,11 +4,11 @@ import axios from "axios";
 import {Link, Outlet, useNavigate} from "react-router-dom";
 
 export default function Many() {
-    const [manyList, setList] = useState([]);
+    const [tuorList, setList] = useState([]);
     const [displayList, setDisplayList] = useState([]);
     let navigate = useNavigate();
     useEffect(() => {
-        axios("http://localhost:8080/many").then((res) => {
+        axios("http://localhost:3000/tuors").then((res) => {
             setList(res.data);
             setDisplayList(res.data);
         }).catch(error => {
@@ -22,10 +22,12 @@ export default function Many() {
                 console.log(error.request);
             }
         })
-    })
+    },[])
     const search = (e) => {
         console.log(e.target.value);
-        let searchResult = manyList.filter(many => many.field1.toLowerCase().includes(e.target.value));
+        let searchResult = tuorList.filter(tuor => tuor.title.toLowerCase().includes(e.target.value) ||
+            tuor.description.toLowerCase().includes(e.target.value));
+        console.log(searchResult);
         setDisplayList(searchResult);
     }
 
@@ -33,33 +35,29 @@ export default function Many() {
         <>
             <div id={"left"}>
                 <h1> Many List </h1>
-                <span>Search</span>
-                <input name={"search"} type={"text"} onChange={search}/>
+                <span>Tìm kiếm</span>
+                <input style={{width: '50%'}} name={"search"} type={"text"} onChange={search}/>
                 <br/>
                 <Link to={"/many/create"}>
                     <button> Thêm mới</button>
                 </Link>
-                <table border={1}>
+                <table border={1} style={{width: '100%', tableLayout: 'fixed'}}>
                     <tbody>
                     <tr>
-                        <td> Stt</td>
-                        <td> Field 1</td>
-                        <td> Field 2</td>
-                        <td> Field 3</td>
-                        <td> Field 4</td>
-                        <td> One</td>
-                        <td> Chi tiết</td>
+                        <td style={{width: '3%'}}> Stt</td>
+                        <td style={{width: '15%'}}> Tiêu đề </td>
+                        <td style={{width: '10%'}}> Giá </td>
+                        <td> Mô tả</td>
+                        <td style={{width: '5%'}}> Chi tiết</td>
                     </tr>
-                    {displayList.map((object, index) => {
+                    {displayList.map((tour, index) => {
                         return (
-                            <tr key={object.id}>
-                                <td> {index + 1}</td>
-                                <td> {object.field1}</td>
-                                <td> {object.field2}</td>
-                                <td> {object.field3}</td>
-                                <td> {object.field4}</td>
-                                <td> {object.one && object.one.name}</td>
-                                <td><Link to={`/many/${object.id}`}> Xem </Link></td>
+                            <tr key={tour.id}>
+                                <td style={{wordWrap: 'break-word'}}> {index + 1}</td>
+                                <td style={{wordWrap: 'break-word'}}> {tour.title}</td>
+                                <td style={{wordWrap: 'break-word'}}> {tour.price}</td>
+                                <td style={{wordWrap: 'break-word'}}> {tour.description}</td>
+                                <td><Link to={`/many/${tour.id}`}> Xem </Link></td>
                             </tr>
                         )
                     })}
@@ -67,7 +65,9 @@ export default function Many() {
                 </table>
             </div>
             <div id={"right"}>
+                <div id={"fixed"}>
                 <Outlet></Outlet>
+                </div>
             </div>
         </>
     )
